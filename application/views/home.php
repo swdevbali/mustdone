@@ -73,16 +73,37 @@
 	<h1>MustDone! </h1>
 
   <div id="body"><!-- InstanceBeginEditable name="content" -->
-    <form name="form1" method="post" action="">
+    <form name="form1" method="post" action="<?=base_url()?>index.php/home/doOpenProject">
       Select your project : 
       <label>
-     <?=form_dropdown('project',$project)?>
-
+     <?=form_dropdown('cboProject',$project)?>
       </label>
             <label>
-            <input type="submit" name="Submit" value="Open">
+            <input name="OpenProject" type="submit" id="OpenProject" value="Open">
             </label>
     </form>
+    <table width="100%" border="0">
+      <tr>
+        <td width="28%" valign="top"><table width="100%" border="0">
+		<? foreach ($subsystem as $key => $val) { ?>
+          <tr>
+            <td valign="top"><?=$key?></td>
+            <td valign="top"><a href="<?=base_url()?>index.php/home/doOpenTodo/<?=$key?>"><?=$val?></a></td>
+          </tr>
+		  <? } ?>
+        </table></td>
+        <td width="72%" valign="top"><table width="100%" border="0">
+		<? foreach($todo as $key=>$value) { ?>
+          <tr>
+            <td>&nbsp;</td>
+            <td><?=$value?></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+		  <? } ?>
+        </table></td>
+      </tr>
+    </table>
     <p>&nbsp;</p>
     <p><a href="<?=base_url()?>index.php/login/doLogout">Logout</a></p>
   <!-- InstanceEndEditable --></div>
