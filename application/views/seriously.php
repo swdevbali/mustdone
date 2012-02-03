@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><!-- InstanceBegin template="/Templates/seriously.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
+	<link REL="SHORTCUT ICON" HREF="<?=base_url()?>res/img/icon.png">
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
-
+	<!-- InstanceBeginEditable name="doctitle" -->
+	<title>MustDone!</title>
+	<!-- InstanceEndEditable -->
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -63,26 +65,18 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+    <!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
 </head>
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
+	<h1>MustDone! </h1>
 
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
-	</div>
+  <div id="body"><!-- InstanceBeginEditable name="content" --><img src="<?=base_url()?>res/img/challenge.jpg" alt="c"><br>
+Challenge Accepted! <a href="<?=base_url()?>index.php/login">Login</a> first dude <!-- InstanceEndEditable --></div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>
 
 </body>
-</html>
+<!-- InstanceEnd --></html>
