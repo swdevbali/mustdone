@@ -11,7 +11,7 @@ class Users_model extends CI_Model {
 		$query = $this->db->get_where('users', array('username' => $username,'password'=>md5($password)));
 		$row=$query->result();
 		
-		if(count($row)>0) return $row;
+		if(count($row)>0) return $row[0];
 		return NULL;
 	}
 }

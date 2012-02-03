@@ -72,7 +72,20 @@
 <div id="container">
 	<h1>MustDone! </h1>
 
-  <div id="body"><!-- InstanceBeginEditable name="content" --><a href="<?=base_url()?>index.php/login/doLogout">Logout</a><!-- InstanceEndEditable --></div>
+  <div id="body"><!-- InstanceBeginEditable name="content" -->
+    <form name="form1" method="post" action="">
+      Select your project : 
+      <label>
+     <?=form_dropdown('project',$project)?>
+
+      </label>
+            <label>
+            <input type="submit" name="Submit" value="Open">
+            </label>
+    </form>
+    <p>&nbsp;</p>
+    <p><a href="<?=base_url()?>index.php/login/doLogout">Logout</a></p>
+  <!-- InstanceEndEditable --></div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>
