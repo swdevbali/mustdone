@@ -13,10 +13,10 @@
 	::webkit-selection{ background-color: #E13300; color: white; }
 
 	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
+	background-color: #fff;
+	margin: 40px;
+	font: 13px/20px normal Helvetica, Arial, sans-serif;
+	color: #4F5155;
 	}
 
 	a {
@@ -65,15 +65,30 @@
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+	<link type="text/css" href="<?=base_url()?>res/css/thickbox.css" rel="stylesheet"/>
+	<script src="<?=base_url()?>res/js/jquery.js" type="text/javascript"></script>
+	<script src="<?=base_url()?>res/js/thickbox.js" type="text/javascript"></script>
     <!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
 
 <div id="container">
-	<h1>MustDone! </h1>
+	<table width="100%" border="0">
+      <tr>
+        <td><h1>MustDone! - ... well, maybe you're not going to like me bro.. </h1></td>
+        <td align="right"><strong>
+        <?=date("D, d M Y")?></strong></td>
+      </tr>
+    </table>
 
-  <div id="body"><!-- InstanceBeginEditable name="content" --><img src="<?=base_url()?>res/img/challenge.jpg" alt="c"><br>
-Challenge Accepted! <a href="<?=base_url()?>index.php/login">Login</a> first dude <!-- InstanceEndEditable --></div>
+    <div id="body"><!-- InstanceBeginEditable name="content" -->
+    <div align="center">
+      <p><img src="<?=base_url()?>res/img/challenge.jpg" alt="c"><br>
+        Challenge Accepted! </p>
+      <p><a href="<?=base_url()?>index.php/login">Login</a> first dude </p>
+    </div>
+  <!-- InstanceEndEditable --></div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>
