@@ -23,7 +23,8 @@ class Project_model extends CI_Model {
 	
 	function getByUsername($username)
 	{
-		$query = " CALL proc_project_by_username(?)";
+		//$query = " CALL proc_project_by_username(?)";
+		$query = "select p.codename as id,concat(p.codename,' - ',p.title) as title from project_contributor pc inner join project p on pc.codename=p.codename where pc.username='".$username."'";
 		$data = array($username);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data=array();
@@ -38,7 +39,8 @@ class Project_model extends CI_Model {
 	
 	function getSubsystemByCodename($codename)
 	{
-		$query = " CALL prco_subsystem_by_codename(?)";
+		//$query = " CALL prco_subsystem_by_codename(?)";
+		$query = "select subsystemcode,title,description,ordering from project_subsystem  where codename='".$codename."' order by ordering";
 		$data = array($codename);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data=$result->result();
@@ -49,7 +51,8 @@ class Project_model extends CI_Model {
 	
 	function getTodoBySubsystem($codename, $subsystemcode)
 	{
-		$query = " CALL proc_todo_by_subsystem(?,?)";
+		//$query = " CALL proc_todo_by_subsystem(?,?)";
+		$query = "select idproject_todo,title,status,todo_type,outcome,username from project_todo p inner join todo_type t on p.todotypecode = t.todotypecode where codename='".$codename."' and subsystemcode='".$subsystemcode."' order by status,todo_type, idproject_todo desc";
 		$data = array($codename,$subsystemcode);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->result();
@@ -60,7 +63,8 @@ class Project_model extends CI_Model {
 	
 	function getSubsystemByCode($subsystemcode)
 	{
-		$query = " CALL proc_subsystem_by_code(?)";
+		//$query = " CALL proc_subsystem_by_code(?)";
+		$query = "  select subsystemcode,title,description from project_subsystem where subsystemcode='".$subsystemcode."'";
 		$data = array($subsystemcode);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->row();
@@ -71,13 +75,16 @@ class Project_model extends CI_Model {
 	
 	function saveCompletion($idproject_todo,$nextStatus,$outcome)
 	{
-		$query = " CALL proc_todo_completion(?,?,?)";
+		/*$query = " CALL proc_todo_completion(?,?,?)";
 		$data = array($idproject_todo,$nextStatus,$outcome);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->row();
 		$result->next_result();
 		$result->free_result();
-		return $row_data;
+		return $row_data;*/
+		$data = array('status'=>$nextStatus,'outcome'=>$outcome,'completedAt'=>date('Y-m-d'));
+		$this->db->where('idproject_todo',$idproject_todo);
+		$this->db->update('project_todo',$data);
 	}
 	
 	function saveTodo($idproject_todo, $title,$status,$codename,$subsystemcode,$username,$todotypecode)
