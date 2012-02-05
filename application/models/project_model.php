@@ -32,7 +32,7 @@ class Project_model extends CI_Model {
 		{
 			  $row_data[$row['id']]=$row['title'];
 		}
-		$result->next_result();
+		//$result->next_result();
 		$result->free_result();
 		return $row_data;
 	}
@@ -44,7 +44,7 @@ class Project_model extends CI_Model {
 		$data = array($codename);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data=$result->result();
-		$result->next_result();
+		//$result->next_result();
 		$result->free_result();
 		return $row_data;
 	}
@@ -56,7 +56,7 @@ class Project_model extends CI_Model {
 		$data = array($codename,$subsystemcode);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->result();
-		$result->next_result();
+		//$result->next_result();
 		$result->free_result();
 		return $row_data;
 	}
@@ -68,7 +68,7 @@ class Project_model extends CI_Model {
 		$data = array($subsystemcode);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->row();
-		$result->next_result();
+		//$result->next_result();
 		$result->free_result();
 		return $row_data;
 	}

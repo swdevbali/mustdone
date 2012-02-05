@@ -49,10 +49,10 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'mustdone';
-$db['default']['dbdriver'] = 'mysqli';
+$db['default']['username'] = 'sangkar1_root';
+$db['default']['password'] = 'adminadmin';
+$db['default']['database'] = 'sangkar1_mustdone';
+$db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
