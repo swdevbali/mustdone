@@ -15,6 +15,7 @@ class Home extends CI_Controller {
 		$data['subsystem']=array();
 		$data['projectCompletion']='';
 		$data['subsystemCompletion']='';
+		$data['progressTodo']=array();
 		return $data;
 	}
 	public function index()
@@ -75,12 +76,14 @@ class Home extends CI_Controller {
 			$data['subsystem']=$subsystem;
 			$this->session->unset_userdata('openSubsystem');
 			$this->session->unset_userdata('openSubsystemCode');
+			
 		
 		}
 		$user_credential=$this->session->userdata('user_credential');
 		$data['todo']=array();
 		$data['project'] = $this->Project_model->getByUsername($user_credential->username);
 		$data['projectCompletion']=$this->Project_model->countProjectCompletion($codename);
+		$data['progressTodo']=$this->Project_model->getProgressTodoByCodename($codename);
 		$this->load->view('home',$data);
 	}
 	
@@ -98,6 +101,7 @@ class Home extends CI_Controller {
 		$data['project'] = $this->Project_model->getByUsername($user_credential->username);
 		$data['projectCompletion']=$this->Project_model->countProjectCompletion($codename);
 		$data['subsystemCompletion']=$this->Project_model->countSubsystemCompletion($codename, $subsystemcode);
+		$data['progressTodo']=$this->Project_model->getProgressTodoByCodename($codename);
 		$this->load->view('home',$data);
 	}
 	
@@ -131,6 +135,12 @@ class Home extends CI_Controller {
 		$todo = $this->Project_model->getTodoTitleById($idproject_todo);
 		if($todo->outcome=='') echo 'Sorry, no outcome saved';
 		else echo '<strong>' . $todo->outcome."</strong>";
+	}
+	
+	public function toggleProgress($idproject_todo,$onProgress)
+	{
+		$this->Project_model->toggleProgress($idproject_todo,$onProgress);
+		redirect('home/doOpenSubsystem/'.$this->session->userdata('openSubsystemCode'));
 	}
 }
 

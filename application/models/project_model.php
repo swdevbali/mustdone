@@ -52,8 +52,20 @@ class Project_model extends CI_Model {
 	function getTodoBySubsystem($codename, $subsystemcode)
 	{
 		//$query = " CALL proc_todo_by_subsystem(?,?)";
-		$query = "select idproject_todo,title,status,todo_type,outcome,username from project_todo p inner join todo_type t on p.todotypecode = t.todotypecode where codename='".$codename."' and subsystemcode='".$subsystemcode."' order by status,todo_type, idproject_todo desc";
+		$query = "select idproject_todo,title,status,todo_type,outcome,username,onProgress from project_todo p inner join todo_type t on p.todotypecode = t.todotypecode where codename='".$codename."' and subsystemcode='".$subsystemcode."' and onProgress=0 order by status,todo_type, idproject_todo desc";
 		$data = array($codename,$subsystemcode);
+		$result = $this->db->query($query,$this->safe_escape($data));
+		$row_data = $result->result();
+		//$result->next_result();
+		$result->free_result();
+		return $row_data;
+	}
+	
+	function getProgressTodoByCodename($codename)
+	{
+		//$query = " CALL proc_todo_by_subsystem(?,?)";
+		$query = "select idproject_todo,title,status,todo_type,outcome,username,onProgress from project_todo p inner join todo_type t on p.todotypecode = t.todotypecode where codename='".$codename."' and onProgress=1 order by status,todo_type, idproject_todo desc";
+		$data = array($codename);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->result();
 		//$result->next_result();
@@ -82,7 +94,7 @@ class Project_model extends CI_Model {
 		$result->next_result();
 		$result->free_result();
 		return $row_data;*/
-		$data = array('status'=>$nextStatus,'outcome'=>$outcome,'completedAt'=>date('Y-m-d'));
+		$data = array('status'=>$nextStatus,'outcome'=>$outcome,'completedAt'=>date('Y-m-d'),'onProgress'=>'0');
 		$this->db->where('idproject_todo',$idproject_todo);
 		$this->db->update('project_todo',$data);
 	}
@@ -182,4 +194,13 @@ class Project_model extends CI_Model {
 		return number_format($done/$total*100,2);// $done;
 	}
 
+
+	function toggleProgress($idproject_todo,$onProgress)
+	{
+		$toggled=0;
+		if($onProgress==0) $toggled=1; else $toggled=0;
+		$data = array('onProgress'=>$toggled);
+		$this->db->where('idproject_todo',$idproject_todo);
+		$this->db->update('project_todo',$data);
+	}
 }

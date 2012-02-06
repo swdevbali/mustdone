@@ -104,7 +104,31 @@
             <a href="<?=base_url()?>index.php/login/confirmLogout?width=400&height=350" class="thickbox"><br>
             Logout</a>
     </form>
-	<p>&nbsp;</p>
+
+	  Progress : 
+	  <table width="100%" border="0">
+        <? $i=0; foreach($progressTodo as $t) { $i++; ?>
+	    <tr>
+          <td><strong><i><?=$t->title?></i></strong>
+            <? if($t->username==$this->session->userdata('user_credential')->username) { ?>
+            <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>">Pause</a> <a href="<?=base_url()?>index.php/home/openCompletionForm/<?=$t->idproject_todo?>/<?=$t->status?>?width=700&height=300" class="thickbox">DONE!</a><? } ?></td>
+        </tr>
+        <? } ?>
+	  </table>
+	  <? if($i==0) {?>
+	  <p align="center">
+	  <img src="<?=base_url()?>res/img/dafuq.jpg" width="108" height="76"/> <strong><br>
+	  NO ONE IS WORKING???</strong>
+	  </p>
+    <? } else { ?>
+	<p align="center">
+	<img src="<?=base_url()?>res/img/fubintang.jpg" width="103" height="100"/>
+	
+	<br>
+	<strong>	Working it is... </strong>
+	</p>
+	<? } ?>
+	
 	<p align="right">Project Completion :<span class="style1"> 
 	  <?=$projectCompletion?>
 	  %
@@ -151,9 +175,9 @@
 			<? } ?>			</td>
             <td width="18%" align="left" valign="top">
               <?=$t->todo_type?>            </td>
-            <td width="54%" valign="top"><?=$t->title?></td>
-            <td width="12%" align="center" valign="top"><?=$t->username?> <? if($this->session->userdata('user_credential')->username==$t->username || $this->session->userdata('user_credential')->role=='admin') { ?><br/>	
-              <a href="<?=base_url()?>index.php/home/openTodoForm/<?=$t->idproject_todo?>?width=900&height=250" class="thickbox"">edit</a>              <a href="<?=base_url()?>index.php/home/confirmTodoDelete/<?=$t->idproject_todo?>?width=700&height=350" class="thickbox"">delete</a>              <? } ?></td>
+            <td width="49%" valign="top"><?=$t->title?></td>
+            <td width="17%" align="center" valign="top"><?=$t->username?> <? if($this->session->userdata('user_credential')->username==$t->username || $this->session->userdata('user_credential')->role=='admin') { ?><br/>	
+              <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>">GO!</a> <a href="<?=base_url()?>index.php/home/openTodoForm/<?=$t->idproject_todo?>?width=900&height=250" class="thickbox"">edit</a>              <a href="<?=base_url()?>index.php/home/confirmTodoDelete/<?=$t->idproject_todo?>?width=700&height=350" class="thickbox"">delete</a>               <? } ?></td>
           </tr>
 		  <? } ?>
         </table></td>
