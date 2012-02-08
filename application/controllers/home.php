@@ -16,6 +16,7 @@ class Home extends CI_Controller {
 		$data['projectCompletion']='';
 		$data['subsystemCompletion']='';
 		$data['progressTodo']=array();
+		$data['recentUpdates']=array();
 		return $data;
 	}
 	public function index()
@@ -84,6 +85,7 @@ class Home extends CI_Controller {
 		$data['project'] = $this->Project_model->getByUsername($user_credential->username);
 		$data['projectCompletion']=$this->Project_model->countProjectCompletion($codename);
 		$data['progressTodo']=$this->Project_model->getProgressTodoByCodename($codename);
+		$data['recentUpdates']=$this->Project_model->getRecentUpdates($codename);
 		$this->load->view('home',$data);
 	}
 	
@@ -102,6 +104,7 @@ class Home extends CI_Controller {
 		$data['projectCompletion']=$this->Project_model->countProjectCompletion($codename);
 		$data['subsystemCompletion']=$this->Project_model->countSubsystemCompletion($codename, $subsystemcode);
 		$data['progressTodo']=$this->Project_model->getProgressTodoByCodename($codename);
+		$data['recentUpdates']=$this->Project_model->getRecentUpdates($codename);
 		$this->load->view('home',$data);
 	}
 	

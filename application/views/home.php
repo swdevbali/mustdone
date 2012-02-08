@@ -105,17 +105,20 @@
             Logout</a>
     </form>
 
-	  Progress : 
+	 <table width="100%" border="0">
+  <tr>
+    <td valign="top"> Working on : 
 	  <table width="100%" border="0">
         <? $i=0; foreach($progressTodo as $t) { $i++; ?>
 	    <tr>
-          <td><strong><i><?=$t->title?></i></strong>
-            <? if($t->username==$this->session->userdata('user_credential')->username) { ?>
-            <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>">Pause</a> <a href="<?=base_url()?>index.php/home/openCompletionForm/<?=$t->idproject_todo?>/<?=$t->status?>?width=700&height=300" class="thickbox">DONE!</a><? } ?></td>
+          <td>
+            <? if($t->username==$this->session->userdata('user_credential')->username || $this->session->userdata('user_credential')->role=='admin') { ?>
+            <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>"><img src="<?=base_url()?>res/img/pause.jpg"></a> <a href="<?=base_url()?>index.php/home/openCompletionForm/<?=$t->idproject_todo?>/<?=$t->status?>?width=700&height=300" class="thickbox"><img src="<?=base_url()?>res/img/done.jpg" width="16" height="16"></a><? } ?>
+			<strong><i><?=$t->title?></i></strong></td>
         </tr>
         <? } ?>
-	  </table>
-	  <? if($i==0) {?>
+	  </table></td>
+    <td valign="top">	  <? if($i==0) {?>
 	  <p align="center">
 	  <img src="<?=base_url()?>res/img/dafuq.jpg" width="108" height="76"/> <strong><br>
 	  NO ONE IS WORKING???</strong>
@@ -128,6 +131,19 @@
 	<strong>	Working it is... </strong>
 	</p>
 	<? } ?>
+</td>
+    <td valign="top"> Recent updates: 
+	  <table width="100%" border="0">
+        <? $i=0; foreach($recentUpdates as $t) { $i++; ?>
+	    <tr>
+          <td><i><?=$t->title?>
+             <a href="<?=base_url()?>index.php/home/showOutcome/<?=$t->idproject_todo?>?width=200&height=100" class="thickbox"><img src="<?=base_url()?>res/img/open.jpg" width="16" height="16" border="0"></a></i></td>
+        </tr>
+        <? } ?>
+	  </table></td>
+  </tr>
+</table>
+
 	
 	<p align="right">Project Completion :<span class="style1"> 
 	  <?=$projectCompletion?>
@@ -156,29 +172,33 @@
 		Description : <?=$this->session->userdata('openSubsystem')->description?><br/>
 		Completion  : <?=$subsystemCompletion?>%<br/><hr/>
 		<div align="right"><a href="<?=base_url()?>index.php/home/openTodoForm/-1?width=900&height=250" class="thickbox">New todo</a>		  </div>
-		<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#66FF00">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" bordercolor="#66FF00">
 		<? $i=0; foreach($todo as $t) { ?>
           <tr>
-            <td width="5%" align="right" valign="top"><?=++$i?></td>
-            <td width="11%" align="left" valign="top">
-			<? if($t->status=='DONE') { ?>
-			<?=$t->status?><br/>
-			<a href="<?=base_url()?>index.php/home/showOutcome/<?=$t->idproject_todo?>?width=200&height=100" class="thickbox">
-			outcome..			</a>
-			<? } else { ?>
-			<? if ($t->username==$this->session->userdata('user_credential')->username || $this->session->userdata('user_credential')->role=='admin'  ) {?>
-			<a href="<?=base_url()?>index.php/home/openCompletionForm/<?=$t->idproject_todo?>/<?=$t->status?>?width=700&height=300" class="thickbox">
-			<?=$t->status?>
-			<? } else { ?>
-			<?=$t->status?>
-			<? } ?>
-			<? } ?>			</td>
-            <td width="18%" align="left" valign="top">
-              <?=$t->todo_type?>            </td>
-            <td width="49%" valign="top"><?=$t->title?></td>
-            <td width="17%" align="center" valign="top"><?=$t->username?> <? if($this->session->userdata('user_credential')->username==$t->username || $this->session->userdata('user_credential')->role=='admin') { ?><br/>	
-              <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>">GO!</a> <a href="<?=base_url()?>index.php/home/openTodoForm/<?=$t->idproject_todo?>?width=900&height=250" class="thickbox"">edit</a>              <a href="<?=base_url()?>index.php/home/confirmTodoDelete/<?=$t->idproject_todo?>?width=700&height=350" class="thickbox"">delete</a>               <? } ?></td>
-          </tr>
+            <td width="4%" align="right" valign="top">.</td>
+            <td width="96%" valign="top"><strong>[<?=$t->todo_type?>]</strong>
+              <?=$t->title?> (<?=$t->username?>)
+              <? if($t->status=='DONE') { ?>
+              <img src="<?=base_url()?>res/img/done.jpg" width="16" height="16"> <a href="<?=base_url()?>index.php/home/showOutcome/<?=$t->idproject_todo?>?width=200&height=100" class="thickbox"><i><a href="<?=base_url()?>index.php/home/showOutcome/<?=$t->idproject_todo?>?width=200&height=100" class="thickbox"><img src="<?=base_url()?>res/img/open.jpg" alt="s" width="16" height="16" border="0"></a>
+              <? } else { ?>
+              <? if ($t->username==$this->session->userdata('user_credential')->username || $this->session->userdata('user_credential')->role=='admin'  ) {?>
+              <a href="<?=base_url()?>index.php/home/openCompletionForm/<?=$t->idproject_todo?>/<?=$t->status?>?width=700&height=300" class="thickbox">
+              <? if($t->status=='Waiting') {?>
+              <img src="<?=base_url()?>res/img/wait.jpg" width="16" height="16">
+              <? } else { ?>
+              <? } ?>
+              <? } ?>
+              <? } ?>
+			  </a>
+			   <? if($this->session->userdata('user_credential')->username==$t->username || $this->session->userdata('user_credential')->role=='admin') { ?>	
+              <? if($t->status=='Waiting') { ?>
+			  <a href="<?=base_url()?>index.php/home/toggleProgress/<?=$t->idproject_todo?>/<?=$t->onProgress?>"><img src="<?=base_url()?>res/img/go.jpg" width="16" height="16"></a>
+			 
+			  <a href="<?=base_url()?>index.php/home/openTodoForm/<?=$t->idproject_todo?>?width=900&height=250" class="thickbox""><img src="<?=base_url()?>res/img/edit.jpg" alt="f" width="16" height="16"></a>   
+			  <a href="<?=base_url()?>index.php/home/confirmTodoDelete/<?=$t->idproject_todo?>?width=700&height=350" class="thickbox""><img src="<?=base_url()?>res/img/delete.jpg" width="16" height="16"></a>
+			   <? } ?>
+			  <? } ?>			  </td>
+            </tr>
 		  <? } ?>
         </table></td>
       </tr>

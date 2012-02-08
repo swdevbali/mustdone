@@ -94,7 +94,7 @@ class Project_model extends CI_Model {
 		$result->next_result();
 		$result->free_result();
 		return $row_data;*/
-		$data = array('status'=>$nextStatus,'outcome'=>$outcome,'completedAt'=>date('Y-m-d'),'onProgress'=>'0');
+		$data = array('status'=>$nextStatus,'outcome'=>$outcome,'completedAt'=>date('Y-m-d H:i:s'),'onProgress'=>'0');
 		$this->db->where('idproject_todo',$idproject_todo);
 		$this->db->update('project_todo',$data);
 	}
@@ -203,4 +203,16 @@ class Project_model extends CI_Model {
 		$this->db->where('idproject_todo',$idproject_todo);
 		$this->db->update('project_todo',$data);
 	}
+	
+	function getRecentUpdates($codename)
+	{
+		$query = "select idproject_todo,title,status,todo_type,outcome,username,onProgress,completedAt from project_todo p inner join todo_type t on p.todotypecode = t.todotypecode where codename='".$codename."' and status='DONE' order by completedAt desc limit 0,5";
+		$data = array($codename);
+		$result = $this->db->query($query,$this->safe_escape($data));
+		$row_data = $result->result();
+		//$result->next_result();
+		$result->free_result();
+		return $row_data;
+	}
+	
 }
