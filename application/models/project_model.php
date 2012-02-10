@@ -214,5 +214,29 @@ class Project_model extends CI_Model {
 		$result->free_result();
 		return $row_data;
 	}
+
+	function saveProject($oldCodename,$codename,$title,$description)
+	{
+		if($oldCodename=='')
+		{
+			$data=array('codename'=>$codename,'title'=>$title,'description'=>$description,'completion'=>0);
+			$this->db->insert('project',$data);
+			
+			$data2=array('username'=>$this->session->userdata('user_credential')->username,'codename'=>$codename,'rolecode'=>'PRG');
+			$this->db->insert('project_contributor',$data2);
+		}else
+		{
+		}
+	}
 	
+	function saveSubsystem($codename, $oldSubsystemcode,$subsystemcode,$title,$description)
+	{
+		if($oldSubsystemcode=='')
+		{
+			$data=array('codename'=>$codename,'subsystemcode'=>$subsystemcode,'title'=>$title,'description'=>$description);
+			$this->db->insert('project_subsystem',$data);
+		}else
+		{
+		}
+	}
 }

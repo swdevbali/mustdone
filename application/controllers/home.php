@@ -145,6 +145,52 @@ class Home extends CI_Controller {
 		$this->Project_model->toggleProgress($idproject_todo,$onProgress);
 		redirect('home/doOpenSubsystem/'.$this->session->userdata('openSubsystemCode'));
 	}
+
+	public function openProjectForm($codename)
+	{
+	    if($codename<>-1)
+		{
+		}
+		$data['title']='';
+		$data['description']='';
+		$data['codename']='';
+		$data['oldCodename']='';
+		$this->load->view('project_form',$data);
+	}
+	
+	public function saveProject()
+	{
+		$oldCodename=$this->input->post('oldCodename');
+		$codename=$this->input->post('codename');
+		$title=$this->input->post('title');
+		$description=$this->input->post('description');
+		$this->Project_model->saveProject($oldCodename,$codename,$title,$description);
+		$this->session->set_userdata('codename',$codename);
+		redirect('home');
+	}
+	
+	public function openSubsystemForm($subsystemcode)
+	{
+		$data['subsystemcode']='';
+		$data['title']='';
+		$data['description']='';
+		if($subsystemcode<>-1)
+		{
+		
+		}
+		$this->load->view('form_subsystem',$data);
+	}
+	
+	public function saveSubsystem()
+	{
+		$oldSubsystemcode=$this->input->post('oldSubsystemcode');
+		$subsystemcode=$this->input->post('subsystemcode');
+		$title=$this->input->post('title');
+		$description=$this->input->post('description');
+		$codename = $this->session->userdata('codename');
+		$this->Project_model->saveSubsystem($codename, $oldSubsystemcode,$subsystemcode,$title,$description);
+		redirect('home/doOpenSubsystem/'.$subsystemcode);//better to open the newly added subsystem 
+	}
 }
 
 

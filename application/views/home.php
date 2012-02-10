@@ -101,8 +101,8 @@
             <label>
             <input name="OpenProject" type="submit" id="OpenProject" value="Open">
             </label>
-            <a href="<?=base_url()?>index.php/login/confirmLogout?width=400&height=350" class="thickbox"><br>
-            Logout</a>
+<a href="<?=base_url()?>index.php/home/openProjectForm/-1?width=800&height=150" class="thickbox">Create New Project</a>
+            <a href="<?=base_url()?>index.php/login/confirmLogout?width=400&height=350" class="thickbox">Logout</a>
     </form>
 
 	 <table width="100%" border="0">
@@ -154,7 +154,7 @@
 	<hr>
 	<table width="100%" border="0">
       <tr>
-        <td width="28%" valign="top"><table width="100%" border="0">
+        <td width="28%" valign="top"><a href="<?=base_url()?>index.php/home/openSubsystemForm/-1?width=800&height=150" class="thickbox">New subsystem</a><table width="100%" border="0">
 		<? foreach ($subsystem as $s) { ?>
           <tr>
             <td valign="top"><?=$s->subsystemcode?></td>
