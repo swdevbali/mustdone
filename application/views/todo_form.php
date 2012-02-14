@@ -8,6 +8,10 @@
         <input name="txtTitle" type="text" id="txtTitle" value="<?=$title?>" size="100">
       </label></td>
     </tr>
+     <tr>
+      <td valign="top">Subsystem</td>
+      <td valign="top"><?=form_dropdown('cboSubsystem',$subsystemList,$subsystemcode)?></td>
+    </tr>
     <tr>
       <td valign="top">Type</td>
       <td valign="top"><?=form_dropdown('cboTodoType',$todoTypeList,$todoType)?></td>

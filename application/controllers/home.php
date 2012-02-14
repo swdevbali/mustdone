@@ -30,15 +30,21 @@ class Home extends CI_Controller {
 	public function openTodoForm($idproject_todo)
 	{
 		$data['todoTypeList']=$this->Project_model->getTodoType();
+		$codename=$this->session->userdata('openProject');
+		$data['subsystemList']=$this->Project_model->getSubsystemList($codename);
+		
 	
 		$data['idproject_todo']=$idproject_todo;
 		if($idproject_todo==-1)
 		{
 			$data['title']='';
 			$data['todoType']='';
+			$data['subsystemcode']='';
 		} else {
-			$data['title']=$this->Project_model->getTodoTitleById($idproject_todo)->title;
-			$data['todoType']=$this->Project_model->getTodoTitleById($idproject_todo)->todotypecode;
+			$project_todo = $this->Project_model->getTodoTitleById($idproject_todo);
+			$data['title']=$project_todo->title;
+			$data['todoType']=$project_todo->todotypecode;
+			$data['subsystemcode']=$project_todo->subsystemcode;
 		}
 		$this->load->view('todo_form',$data);
 	}
@@ -46,10 +52,10 @@ class Home extends CI_Controller {
 	public function saveTodo()
 	{
 		$codename = $this->session->userdata('openProject');
-		$subsystemcode =$this->session->userdata('openSubsystemCode');
 		$username = $this->session->userdata('user_credential')->username;
 		$idproject_todo=$this->input->post('idproject_todo');
 		$todotypecode=$this->input->post('cboTodoType');
+		$subsystemcode =$this->input->post('cboSubsystem');
 		$this->Project_model->saveTodo($idproject_todo, $this->input->post('txtTitle'),'Waiting',$codename,$subsystemcode,$username,$todotypecode);
 		redirect('home/doOpenSubsystem/'.$subsystemcode);
 	}
@@ -94,7 +100,7 @@ class Home extends CI_Controller {
 		$data=$this->defineVariables();
 		$user_credential=$this->session->userdata('user_credential');
 		$codename = $this->session->userdata('openProject');
-		$subsystem = $this->Project_model->getSubsystemByCode($subsystemcode);
+		$subsystem = $this->Project_model->getSubsystemByCode($codename, $subsystemcode);
 		$this->session->set_userdata('openSubsystem',$subsystem);
 		$this->session->set_userdata('openSubsystemCode',$subsystemcode);
 		
@@ -187,9 +193,10 @@ class Home extends CI_Controller {
 		$subsystemcode=$this->input->post('subsystemcode');
 		$title=$this->input->post('title');
 		$description=$this->input->post('description');
-		$codename = $this->session->userdata('codename');
+		$codename = $this->session->userdata('openProject');
 		$this->Project_model->saveSubsystem($codename, $oldSubsystemcode,$subsystemcode,$title,$description);
-		redirect('home/doOpenSubsystem/'.$subsystemcode);//better to open the newly added subsystem 
+		if($subsystemcode!="") redirect('home/doOpenSubsystem/'.$subsystemcode);//better to open the newly added subsystem 
+		redirect('home/doOpenProject');
 	}
 }
 

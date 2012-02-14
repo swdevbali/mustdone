@@ -73,10 +73,10 @@ class Project_model extends CI_Model {
 		return $row_data;
 	}
 	
-	function getSubsystemByCode($subsystemcode)
+	function getSubsystemByCode($codename, $subsystemcode)
 	{
 		//$query = " CALL proc_subsystem_by_code(?)";
-		$query = "  select subsystemcode,title,description from project_subsystem where subsystemcode='".$subsystemcode."'";
+		$query = "  select subsystemcode,title,description from project_subsystem where subsystemcode='".$subsystemcode."' and codename='".$codename."'";
 		$data = array($subsystemcode);
 		$result = $this->db->query($query,$this->safe_escape($data));
 		$row_data = $result->row();
@@ -139,6 +139,22 @@ class Project_model extends CI_Model {
 		}
 		return $row_data;
 	}
+	
+	function getSubsystemList($codename)
+	{
+		$this->db->select('subsystemcode as id,title');
+		$this->db->order_by('subsystemcode');
+		$this->db->where('codename',$codename);
+		$result = $this->db->get('project_subsystem');
+		
+		$row_data=array();
+	  	foreach($result->result_array() as $row)
+		{
+			  $row_data[$row['id']]=$row['id']." - ".$row['title'];
+		}
+		return $row_data;
+	}
+	
 	
 	function countProjectCompletion($codename)
 	{
@@ -234,6 +250,7 @@ class Project_model extends CI_Model {
 		if($oldSubsystemcode=='')
 		{
 			$data=array('codename'=>$codename,'subsystemcode'=>$subsystemcode,'title'=>$title,'description'=>$description);
+			
 			$this->db->insert('project_subsystem',$data);
 		}else
 		{
